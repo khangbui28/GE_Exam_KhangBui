@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour
 
 
     [SerializeField] float speed;
+    [SerializeField] float jumpHeight = 0.5f;
 
     [SerializeField] GameObject bulletPb;
 
@@ -16,7 +17,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Start()
     {
-        jumpCommand = new JumpCommand(rb);
+        jumpCommand = new JumpCommand(rb, jumpHeight);
     }
 
     void Update()
@@ -25,6 +26,9 @@ public class PlayerControl : MonoBehaviour
 
      
         Vector3 movement = new Vector3(input,0f,0f ) * speed * Time.deltaTime;
+
+
+        rb.MovePosition(transform.position + movement);
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -37,7 +41,6 @@ public class PlayerControl : MonoBehaviour
            jumpCommand.Execute();
         }
 
-        rb.MovePosition(transform.position + movement);
     }
 
     void Shoot()

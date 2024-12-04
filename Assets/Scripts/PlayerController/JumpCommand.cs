@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public interface ICommand
 {
     public void Execute();
@@ -8,17 +9,18 @@ public interface ICommand
 public class JumpCommand : ICommand
 {
     private Rigidbody _rb;
+    private float _jumpHeight;
 
-    public JumpCommand(Rigidbody playerRb)
+    public JumpCommand(Rigidbody playerRb, float jumpHeight)
     {
         _rb = playerRb;
+        _jumpHeight = jumpHeight;
     }
 
     public void Execute()
     {
-        Vector3 movement = new Vector3 (0.0f,10f,0.0f) * 5f * Time.deltaTime;
-        
-        _rb.MovePosition(_rb.transform.position + movement);
+       
+        _rb.AddForce(Vector3.up * _jumpHeight, ForceMode.Impulse);
     }
 }
 
